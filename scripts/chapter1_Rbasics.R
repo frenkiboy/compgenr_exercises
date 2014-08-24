@@ -1,4 +1,14 @@
+#-------------------------------------------------------------------------------
+### the setup
+#-------------------------------------------------------------------------------
 
+# set your working directory to the source file location
+# in RStudio top menu:
+# Session > Set Working Directory > To Source File Location
+
+# if you have done it correctly you should see this script when you type dir()
+dir()
+[1] "chapter1_Rbasics.R"
 
 #-------------------------------------------------------------------------------
 ### Computations in R
