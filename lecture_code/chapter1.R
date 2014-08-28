@@ -238,9 +238,9 @@ qplot(mpg, data=mtcars, geom="density", fill=gear, alpha=I(.5),
 # lattice
 # http://www.statmethods.net/advgraphs/trellis.html
 library(lattice)
-pl <- densityplot(~mpg, data = mtcars, groups = gear,
-                     plot.points = FALSE, ref = TRUE, auto.key = list(columns = 3))
-print(pl)
+densityplot(~mpg, data = mtcars, groups = gear,
+            plot.points = FALSE, ref = TRUE, auto.key = list(columns = 3) )
+
 
 # 1) both good for complicated graphics with multiple variables, good
 # for when you want to make plots for different groups
@@ -306,7 +306,7 @@ for (i in 1:10) {
 }
 
 # calculate the mean of each expression values for each gene
-gene.exp=list(gene1=c(20,30,40),gene2=c(100,30,40), gene3=c(220,30,40) )
+gene.exp = list(gene1=c(20,30,40),gene2=c(100,30,40), gene3=c(220,30,40) )
 result=c()
 for (i in 1:length(gene.exp)) {
   mean.exp=mean(gene.exp[[i]])
