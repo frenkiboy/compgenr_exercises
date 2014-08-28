@@ -215,8 +215,8 @@ points(x1,y3,pch=19)
 
 
 # more on plotting with base graphics
-# http://nicercode.github.io/guides/plotting/
-  
+#http://www.statmethods.net/graphs/index.html  
+
 
 # other plotting platforms
 
@@ -244,6 +244,7 @@ print(pl)
 
 # 1) both good for complicated graphics with multiple variables, good
 # for when you want to make plots for different groups
+# ggplot will take some time to learn
 
 #-------------------------------------------------------------------------------
 ### Functions and control structures (for, if/else etc.)
