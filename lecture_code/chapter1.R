@@ -1,7 +1,7 @@
 #-------------------------------------------------------------------------------
 ### The setup
 #-------------------------------------------------------------------------------
-
+  
 
 # install package named 'randomForests' from CRAN
 install.packages("randomForests")
@@ -15,7 +15,7 @@ library(devtools)
 install_github("roxygen")
 
 # getting help
-libray(MASS)
+library(MASS)
 ls("package:MASS") # functions in the package
 ls() # objects in your R enviroment
 
@@ -83,6 +83,7 @@ class(r1)  # class of the vector
 
 a <- 1  # this is actually a vector length one
 
+a=c(a,2)
 
 ## Matrices
 ############
@@ -93,7 +94,7 @@ m1
  
 t(m1)  # transpose of m1
  
-dim(m1)  # 2 by 5 matrix
+dim(m1)  # 4 by 2 matrix
 
 m2 <- matrix(c(1, 3, 2, 5, -1, 2, 2, 3, 9), nrow = 3)
 m2
@@ -101,8 +102,8 @@ m2
 #subsetting
 m2[1,]
 m2[1:2,]
-m2[1:2,1:3]
-m2[,1:3]
+m2[1:2,1:2]
+m2[,2:3]
 
 
 ## Data Frames
@@ -117,7 +118,8 @@ mydata <- data.frame(chr, start, end, strand)
 names(mydata) <- c("chr", "start", "end", "strand")
 mydata  # OR this will work too
 
-mydata <- data.frame(chr = chr, start = start, end = end, strand = strand)
+mydata <- data.frame(chr.name = chr, start.loc = start, end.loc = end, 
+                     strand.string = strand)
 mydata
 
 
@@ -148,7 +150,8 @@ w
 w[[3]]  # 3rd component of the list
 
 
-w[["mynumbers"]]  # component named mynumbers in list
+w[["mynumbers"]] 
+w$mynumbers # component named mynumbers in list
 w$age
 
 
@@ -195,9 +198,75 @@ barplot(height=perc,names.arg=c("CpGi","exon","CpGi","exon"),
 legend("topright",legend=c("test","control"),fill=c("red","blue"))
 
 
+# line plot
+?plot.default
+x1=1:50
+y1=sqrt(1:50)
+plot(x1,y1)
+
+# change 
+plot(x1,y1,type="l")
+# add more lines
+y2=1+sqrt(1:50)/2
+lines(x1,y2,col="red")
+
+y3=2+sqrt(1:50)/2
+points(x1,y3,pch=19)
+
+
+# more on plotting with base graphics
+# http://nicercode.github.io/guides/plotting/
+  
+
+# other plotting platforms
+
+# ggplot2
+# http://www.cookbook-r.com/Graphs/
+# http://www.statmethods.net/advgraphs/ggplot2.html  
+
+
+# create factors with value labels 
+library(ggplot2)
+mtcars$gear <- factor(mtcars$gear,levels=c(3,4,5),
+                      labels=c("3gears","4gears","5gears")) 
+# Kernel density plots for mpg
+# grouped by number of gears (indicated by color)
+qplot(mpg, data=mtcars, geom="density", fill=gear, alpha=I(.5), 
+      main="Distribution of Gas Milage", xlab="Miles Per Gallon", 
+      ylab="Density") 
+
+# lattice
+# http://www.statmethods.net/advgraphs/trellis.html
+library(lattice)
+pl <- densityplot(~mpg, data = mtcars, groups = gear,
+                     plot.points = FALSE, ref = TRUE, auto.key = list(columns = 3))
+print(pl)
+
+# 1) both good for complicated graphics with multiple variables, good
+# for when you want to make plots for different groups
+
 #-------------------------------------------------------------------------------
 ### Functions and control structures (for, if/else etc.)
 #-------------------------------------------------------------------------------
+
+# functions simplify repeated tasks
+# You can run the same set of operations with different arguments
+# Ex: aligning + quantifying reads from a sequencing experiment
+# you can write a function that takes an fastq filename, genome and annotation
+# arguments and repeats the taks for that fastq file, it will be handy if you will be analyzing 10s of such files
+
+alignQuant(sample.file="sample1.fastq",genome="hg19",annotation="hg19_refseq.bed")
+alignQuant(sample.file="sample2.fastq",genome="mm9",annotation="mm9_refseq.bed")
+
+
+
+# syntax 
+name.of.function <- function(argument1, argument2) {
+  statements
+  return(something)
+}
+
+# function that sums the squares of two input values
 sqSum <- function(x, y) {
   result = x^2 + y^2
   return(result)
@@ -217,10 +286,32 @@ sqSumPrint(2, 3)
 
 
 
+# control structures
+x=45
+if(x<10){
+  cat("x less than 10")
+}else if(x >= 10 & x <50){
+  cat("x is between 10 and 50")
+}else{
+  cat("x greater than 10")
+}
 
+
+# loops
 for (i in 1:10) {
   # number of repetitions
   cat("This is iteration")  # the task to be repeated
   print(i)
 }
 
+# calculate the mean of each expression values for each gene
+gene.exp=list(gene1=c(20,30,40),gene2=c(100,30,40), gene3=c(220,30,40) )
+result=c()
+for (i in 1:length(gene.exp)) {
+  mean.exp=mean(gene.exp[[i]])
+  result=c(result,mean.exp )
+  
+}
+
+# alternative
+lapply(gene.exp,mean)

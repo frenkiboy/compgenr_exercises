@@ -53,37 +53,42 @@ x2 = x*10000
 # b1) 
 # make a vector of 1,2,3,5 and 10 using c(), assign it to vec variable
 # Ex: vec1=c(1,3,4) makes a vector out of 1,3,4
-
+c(1:5,10)
+vec1=c(1,2,3,4,5,10)
 
 # b2) 
 # check the length of your vector with length()
 # Ex: length(vec1) should return 3
-
+length(vec1)
 
 # b3) 
 # make a vector of all numbers between 2 and 15
 # Ex: vec=1:6 makes a vector of numbers between 1 and 6, assigns to vec variable
-
+vec=2:15 
 
 # b4) 
 # make a vector of  4s repeated 10 times using rep() function
 # Ex: rep(x=2,times=5) makes a vector of 2s repeated 5 times
+rep(x=4,times=10)
+rep(4,10)
 
 
 # b5) 
 # make a logical vector with TRUE, FALSE values of length 4, use c()
 # Ex: c(TRUE,FALSE)
+c(TRUE,FALSE,FALSE,TRUE,FALSE)
+c(TRUE,TRUE,FALSE,TRUE,FALSE)
 
 
 # b6) 
 # make a character vector of gene names PAX6,ZIC2,OCT4 and SOX2.
 # Ex: vec=c("a","b","c") makes a character vector of a,b and c
-
+c("PAX6","ZIC2","OCT4","SOX2")
 
 # b7) 
 # subset the vector using [] notation, get 5th and 6th elements
 # Ex: vec1[1] gets the first element. vec1[c(1,3)] gets 1st and 3rd elements
-
+vec1[c(5,6)]
 
 # b8) 
 # You can also subset any vector using a logical vector in []
@@ -102,102 +107,125 @@ myvec != 4
 
 # b10) 
 # use > operator in myvec[ ] to get elements larger than 2 in 'myvec', described above
-
+myvec[ myvec > 2 ] 
+myvec[ myvec == 2 ] 
+myvec[ myvec != 2 ] 
 
 # b11) 
 # make a list using list() function, your list should have 4 elements
-# the one below has 3
+# the one below has 2
 # Ex: mylist= list(a=c(1,2,3),b=c("apple,"orange"))
-
+mylist= list(a=c(1,2,3),
+            b=c("apple","orange"),
+            c=matrix(1:4,nrow=2),
+            d="hello")
 
 # b12) 
 # select the 1st element of the list you made using $ notation
 # Ex: mylist$a selects first element named "a"
-
+mylist$a
 
 # b13) 
 # select the 4th element of the list you made using $ notation
-
+mylist$d
 
 # b14) 
 # select the 1st element of your list using [ ] notation 
 # Ex: mylist[1] selects first element named "a", you get a list with one element
 # Ex: mylist["a"] selects first element named "a", you get a list with one element
+mylist[1] # -> still a list
+mylist[[1]] # not a list
 
+mylist["a"] 
+mylist[["a"]] 
 
 # b15) 
 # select the 4th element of your list using [ ] notation 
-
+mylist[4] 
+mylist[[4]]
 
 # b16) 
 # make a 5x3 matrix (5 rows, 3 columns) using matrix()
 # Ex: matrix(1:6,nrow=3,ncol=2) makes a 3x2 matrix using numbers between 1 and 6
-
+mat=matrix(1:15,nrow=5,ncol=3)
 
 # b17) 
 # What happens when you use byrow = TRUE in your matrix() as an additional argument?
 # Ex: mat=matrix(1:6,nrow=3,ncol=2,byrow = TRUE)
-
+mat=matrix(1:15,nrow=5,ncol=3,byrow = TRUE)
 
 # b18) 
 # Extract first 3 columns and first 3 rows of your matrix using [] notation
 # Ex: mat[1:2,1:2]
-
+mat[1:3,1:3]
 
 # b19) 
 # Extract last two rows
 # Ex: mat[2:3,] or mat[c(2,3),]
-
+mat[4:5,] 
+mat[c(nrow(mat)-1,nrow(mat)),] 
+tail(mat,n=1)
+tail(mat,n=2)
 
 # b20) 
 # Extract first two columns and run class() on the result
-
+class(mat[,1:2])
 
 # b21) 
 # Extract first column and run class() on the result, compare with the above exercise
-
+class(mat[,1])
 
 # b22) 
 # make a data frame with 3 columns and 5 rows, make sure first column is sequence
 # of numbers 1:5, and second column is a character vector
 # Ex: df=data.frame(col1=1:3,col2=c("a","b","c"),col3=3:1) # 3x3 data frame
 # Remember you need to make 3x5 data frame
-
+df=data.frame(col1=1:5,col2=c("a","2","3","b","c"),col3=5:1)
 
 # b23) 
 # Extract first two columns and first two rows 
 # HINT: Same notation as matrices
+df[,1:2]
 
+df[,1:2]
 
 # b24) 
 # Extract last two rows
 # HINT: Same notation as matrices
-
+df[,4:5]
 
 # b25) 
 # Extract last two columns using column names
 # Ex: df[,c("col2","col3")]
-
+df[,c("col2","col3")]
 
 # b26) 
 # Extract second column using column names
 # you can use [] or $ as in lists, use both in two different answers
-
+df$col2
+df[,"col2"]
+class(df["col1"])
+class(df[,"col1"])
 
 # b27)
 # Extract rows where 1st column is larger than 3
 # HINT: you can get a logical vector using > operator
 # logical vectors can be used in [] when subsetting
+df[df$col1 >3 , ]
 
 
 # b28)
 # Extract rows where 1st column is larger than or equal to 3
+df[df$col1 >= 3 , ]
 
 
 # b29)
 # convert data frame to the matrix
 # HINT: use as.matrix()
 # Observe what happened to numeric values in the data.frame
+class(df[,c(1,3)])
+as.matrix(df[,c(1,3)])
+as.matrix(df)
 
 
 # b30)
