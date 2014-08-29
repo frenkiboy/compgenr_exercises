@@ -170,7 +170,7 @@ head(enh.df)
 head(cpgi.df)
 
 
-write.table(cpgi.df,file="cpgi.txt",quote=FALSE,
+write.table(x=cpgi.df,file="cpgi.txt",quote=FALSE,
             row.names=FALSE,col.names=FALSE,sep="\t")
 
 #-------------------------------------------------------------------------------
@@ -185,17 +185,27 @@ hist(x, main = "Hello histogram!!!", col = "red")
 
 y <- rnorm(50)
 # plot a scatter plot control x-axis and y-axis labels
-plot(x, y, main = "scatterplot of random samples", ylab = "y values", xlab = "x values")
+plot(x, y, main = "scatterplot of random samples", ylab = "y values", 
+     xlab = "x values")
 
+plot(x, y, main = "scatterplot ", ylab = "y", 
+     xlab = "x")
 
+plot(x, y, main = "scatterplot ", ylab = "y", 
+     xlab = "x",col="blue")
 
-boxplot(x, y, main = "boxplots of random samples")
+boxplot(x, main = "boxplots of random samples")
+
+boxplot(x, y, main = "boxplots of random samples",col="")
 
 perc=c(50,70,35,25)
+barplot(height=perc,names.arg=c("CpGi","exon","CpGi","exon") )
 barplot(height=perc,names.arg=c("CpGi","exon","CpGi","exon"),
         ylab="percentages",main="imagine %s",
         col=c("red","red","blue","blue"))
 legend("topright",legend=c("test","control"),fill=c("red","blue"))
+legend("topleft",legend=c("test","control"),fill=c("red","blue"))
+legend("bottomleft",legend=c("test","control"),fill=c("red","blue"))
 
 
 # line plot
@@ -206,11 +216,12 @@ plot(x1,y1)
 
 # change 
 plot(x1,y1,type="l")
+
 # add more lines
 y2=1+sqrt(1:50)/2
 lines(x1,y2,col="red")
 
-y3=2+sqrt(1:50)/2
+y3=1+y2
 points(x1,y3,pch=19)
 
 

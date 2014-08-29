@@ -231,16 +231,20 @@ as.matrix(df)
 # b30)
 # make a factor using factor(), with 5 elements
 # Ex: fa=factor(c("a","a","b"))
-
+fa=factor(c("a","a","b","c","c"))
 
 # b31)
 # convert a character vector to factor using as.factor()
 # first make a character vector using c() then use as.factor()
-
+my.vec=c("a","a","b","c","c")
+as.factor(my.vec)
 
 # b32)
 # convert the factor you made above to character using as.character()
-
+fa
+as.character(fa)
+as.numeric()
+as.factor()
 
 #-------------------------------------------------------------------------------
 ### Reading in and writing data out in R
@@ -254,7 +258,7 @@ cpgi=read.table("../data/CpGi.table.hg18.txt",header=TRUE,sep="\t")
 # c2)
 # use head() on cpgi to see first few rows
 head(cpgi)
-
+tail(cpgi)
 
 # c3)
 # why the following doesn't work? see sep argument at help(read.table)
@@ -264,10 +268,12 @@ head(cpgiSepComma)
 
 # c4)
 # what happens when header=FALSE ?
-cpgiHF=read.table("../data/CpGi.table.hg18.txt",header=FALSE,sep="\t")
+cpgiHF=read.table("../data/CpGi.table.hg18.txt",header=FALSE,sep="\t",
+                  stringsAsFactors=FALSE)
 head(cpgiHF)
 head(cpgi)
-
+class(cpgiHF$V2)
+class(cpgiHF$V2)
 
 # c5)
 # read only first 10 rows
@@ -278,7 +284,8 @@ cpgi10row
 # c6)
 # use read.table("../data/CpGi.table.hg18.txt",... with header=FALSE
 # do head() to see the results
-
+df=read.table("../data/CpGi.table.hg18.txt",header=FALSE,sep="\t")
+head(df)
 
 # c7)
 # write CpG islands to a text file
@@ -288,30 +295,38 @@ write.table(cpgi,file="my.cpgi.file.txt")
 # c8)
 # same as above but use quote=FALSE,sep="\t" and row.names=FALSE arguments 
 # save the file to "my.cpgi.file2.txt" and compare it with "my.cpgi.file.txt"
+write.table(cpgi,file="my.cpgi.file2.txt",quote=FALSE,sep="\t",row.names=FALSE)
 
 
 # c9)
 # write out the first 10 rows of 'cpgi'
 # HINT: use subsetting for data frames we learned before
 
+write.table(cpgi[1:10,],file="my.cpgi.fileNrow10.txt",quote=FALSE,sep="\t")
+
 
 # c10)
 # write the first 3 columns of 'cpgi'
+write.table(cpgi[,1:3],file="my.cpgi.fileCol3.txt",quote=FALSE,sep="\t")
 
 
 # c11)
 # write CpG islands only on chr1
 # HINT: use subsetting with [], feed a logical vector using == operator
-
+write.table(cpgi[cpgi$chrom == "chr1",],file="my.cpgi.fileChr1.txt",
+            quote=FALSE,sep="\t")
+head(cpgi[cpgi$chrom == "chr1",])
 
 # c12)
 # read two other data sets "../data/rn4.refseq.bed" and "../data/rn4.refseq2name.txt"
 # with header=FALSE, assign them to df1 and df2 respectively.
-
+df1=read.table("../data/rn4.refseq.bed",sep="\t",header=FALSE)
+df2=read.table("../data/rn4.refseq2name.txt",sep="\t",header=FALSE)
 
 # c13)
 # use head() to see what is inside
-
+head(df1)
+head(df2)
 
 # c14)
 # merge data sets using merge()
@@ -320,7 +335,7 @@ new.df=merge(df1,df2,by.x="V4",by.y="V1")
 
 # c15)
 # use head() to see new.df
-
+head(new.df)
 
 #-------------------------------------------------------------------------------
 ### Plotting in R
@@ -331,27 +346,32 @@ y1=1:100
 # d1)
 # make a scatter plot using x1 and x2 generated above
 # Answer: plot(x1,y1)
-
+plot(x1,y1)
 
 # d2)
 # use main argument to give a title to plot() as in plot(x,y,main="title")
-
+plot(x1,y1,main="scatter plot")
 
 # d3)
 # use xlab argument to set a label to x-axis
 # Ex: plot(x,y,xlab="my label")
+plot(x1,y1,main="scatter plot",xlab="x label")
 
 # d4)
 # use ylab argument to set a label to y-axis
+plot(x1,y1,main="scatter plot",xlab="x label",ylab="y label")
 
 # d5)
 # see what mtext(side=3,text="hi there") does
 # HINT: mtext stands for margin text
-
+plot(x1,y1,main="scatter plot",xlab="x label",ylab="y label")
+mtext(side=3,text="hi there") 
 
 # d6)
 # see what mtext(side=2,text="hi there") does
 # it stands for "margin text", look at your plot after execution
+mtext(side=2,text="hi there") 
+mtext(side=4,text="hi there") 
 
 # d7)
 # see what paste() is used for
@@ -364,6 +384,7 @@ myText
 # You can use paste() as 'text' argument in mtext() try that, you need to re-plot
 # your plot first. HINT: mtext(side=3,text=paste(...))
 
+mtext(side=3,text=paste("here","here"))
 
 # d9)
 # cor() calculates correlation between two vectors
@@ -376,41 +397,52 @@ corxy=cor(x1,y1) # calculates pearson correlation
 # Can you use mtext(),cor() and paste() to display correlation coefficient on
 # your scatterplot ?
 
+plot(x1,y1,main="scatter")
+corxy=cor(x1,y1) 
+#mtext(side=3,text=paste("Pearson Corr.",corxy))
+mtext(side=3,text=paste("Pearson Corr.",round(corxy,3) ) )
+
+plot(x1,y1)
+mtext(side=3,text=paste("Pearson Corr.",round( cor(x1,y1)  ,3)  ) )
 
 # d11)
 # change colors using col
 # Ex: plot(x,y,col="red")
-
+plot(x1,y1,col="red")
 
 # d12)
 # use pch=19 as an argument to your plot() command
+plot(x1,y1,col="red",pch=19)
 
 
 # d13)
 # use pch=18 as an argument to your plot() command
-
+plot(x1,y1,col="red",pch=18)
+?points
 
 # d14)
 # make histogram of x1 with hist() function
 # histogram is a graphical representation of the data distribution 
-
+hist(x1)
 
 # d15)
 # you can change colors with 'col', add labels with 'xlab', 'ylab', and add a 'title'
 # with 'main' arguments. Try all these in a histogram.
-
+hist(x1,main="title")
 
 # d16)
 # make boxplot of y1 with boxplot()
+boxplot(x1,main="title")
 
 
 # d17)
 # make boxplots of x1 and y1 in the same plot
 # boxplot
-
+boxplot(x1,y1,ylab="values",main="title")
 
 # d18)
 # in boxplot use horizontal = TRUE  argument
+boxplot(x1,y1,ylab="values",main="title",horizontal=TRUE)
 
 
 # d19)
@@ -418,11 +450,15 @@ corxy=cor(x1,y1) # calculates pearson correlation
 # 1. run par(mfrow=c(2,1))
 # 2. make a boxplot 
 # 3. make a histogram
-
+par( mfrow=c(2,1) )
+hist(x1)
+boxplot(y1)
 
 # d20)
 # do the same as above but this time with par(mfrow=c(1,2))
-
+par(mfrow=c(2,2))
+hist(x1)
+boxplot(y1)
 
 # d21)
 # save your plot using "Export" button
@@ -430,22 +466,22 @@ corxy=cor(x1,y1) # calculates pearson correlation
 
 # d22)
 # save your plot by running :
-# dev.copy(pdf,filename="plot.file.pdf");dev.off()
-
+# dev.copy(pdf,file="plot.file.pdf");dev.off()
+dev.copy(pdf,file="plot.file.pdf");dev.off()
 
 # d23)
 # save your plot running :
 # dev.copy(png,filename="plot.file.png");dev.off()
-
+dev.copy(png,file="plot.file.png");dev.off()
 
 # d24)
 # Another way to save the plot is the following
 # 1. Open a graphics device
 # 2. Create the plot
 # 3. Close the graphics device
-pdf("myplot.pdf", width = 5, height = 5) # 1.
+pdf("myplot1.pdf", width = 5, height = 5) # 1.
 plot(x1, y1) # 2.
-dev.off() # 3.
+dev.off()   # 3.
 
 
 # d24)
@@ -455,7 +491,8 @@ x2=1:1000+rnorm(1000,mean=0,sd=200)
 y2=1:1000
 plot(x2,y2,pch=19,col="blue")
 smoothScatter(x2,y2,colramp = heat.colors )
-smoothScatter(x2,y2,colramp = colorRampPalette(c("white","blue", "green","yellow","red")))
+smoothScatter(x2,y2,
+               colramp = colorRampPalette(c("white","blue", "green","yellow","red")))
 
 #-------------------------------------------------------------------------------
 ### Functions and control structures (for, if/else etc.)
