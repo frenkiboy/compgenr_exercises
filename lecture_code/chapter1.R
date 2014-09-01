@@ -265,7 +265,8 @@ densityplot(~mpg, data = mtcars, groups = gear,
 # You can run the same set of operations with different arguments
 # Ex: aligning + quantifying reads from a sequencing experiment
 # you can write a function that takes an fastq filename, genome and annotation
-# arguments and repeats the taks for that fastq file, it will be handy if you will be analyzing 10s of such files
+# arguments and repeats the taks for that fastq file, it will be handy if you 
+# will be analyzing 10s of such files
 
 alignQuant(sample.file="sample1.fastq",genome="hg19",annotation="hg19_refseq.bed")
 alignQuant(sample.file="sample2.fastq",genome="mm9",annotation="mm9_refseq.bed")
@@ -273,7 +274,7 @@ alignQuant(sample.file="sample2.fastq",genome="mm9",annotation="mm9_refseq.bed")
 
 
 # syntax 
-name.of.function <- function(argument1, argument2) {
+name.of.function = function(argument1, argument2) {
   statements
   return(something)
 }
@@ -284,46 +285,75 @@ sqSum <- function(x, y) {
   return(result)
 }
 # now try the function out
-sqSum(2, 3)
+a <- sqSum(2, 3)
 
 
 # prints the result, does not return it
 sqSumPrint <- function(x, y) {
   result = x^2 + y^2
-  cat("here is the result:", result, "\n")
+  cat("here is the result:", result,"dfdffd","dfdffd" ,"\n")
 }
+sqSumPrint(2, 3)
+
 
 # now try the function out
 sqSumPrint(2, 3)
 
 
 
-# control structures
+# control structures:
+# control how statemets are executed
 x=45
 if(x<10){
   cat("x less than 10")
 }else if(x >= 10 & x <50){
   cat("x is between 10 and 50")
 }else{
-  cat("x greater than 10")
+  cat("x greater than 50")
 }
 
 
 # loops
-for (i in 1:10) {
+# variable i
+# and a sequence/something that returns a vector
+for (i in c(1,10,11,2,-1) ){
   # number of repetitions
   cat("This is iteration")  # the task to be repeated
-  print(i)
+  cat(i,"\n")
 }
 
 # calculate the mean of each expression values for each gene
 gene.exp = list(gene1=c(20,30,40),gene2=c(100,30,40), gene3=c(220,30,40) )
 result=c()
-for (i in 1:length(gene.exp)) {
+for (i in 1:length(gene.exp) ) 
+{
   mean.exp=mean(gene.exp[[i]])
   result=c(result,mean.exp )
   
 }
 
+result=c()
+mean.exp=mean(gene.exp[[1]])
+result=c(result,mean.exp )
+result
+
+mean.exp=mean(gene.exp[[2]])
+result=c(result,mean.exp )
+result
+
+mean.exp=mean(gene.exp[[3]])
+result=c(result,mean.exp )
+result
+
+
 # alternative
-lapply(gene.exp,mean)
+# apply family functions
+#
+mylist = lapply(gene.exp,mean)
+
+g.exp=c(1,3,4,5,6)
+
+mean( unlist(gene.exp) )
+
+as.vector()
+as.matrix()

@@ -510,22 +510,21 @@ hist(cpgi$perGc) # most values are between 60 and 70
 
 # e3)
 # also make a boxplot
-
+boxplot(cpgi$perGc) 
 
 # e4)
 # use if/else structure to decide if given GC percent high, low or medium
 # if it is low, high, or medium. low < 60, high>75, medium is between 60 and 75
 # use greater or less than operators <  or  >
-GCper=65
-result=YOU_FILL_IN # set initial value
+GCper=90
+result="low"# set initial value
 
-if(YOU_FILL_IN){ # check if GC value is lower than 60, assign "low" to result
-  
-}
-else if(YOU_FILL_IN){  # check if GC value is higher than 75, assign "high" to result
-  
+if(GCper < 60){ # check if GC value is lower than 60, assign "low" to result
+  result="low"
+}else if(GCper>75){  # check if GC value is higher than 75, assign "high" to result
+  result="high"
 }else{ # if those two conditions fail then it must be "medium"
-  
+  result="medium"
 }
 result
 
@@ -536,8 +535,16 @@ result
 # use
 GCclass<-function(my.gc){
   
-  YOU_FILL_IN
+  result="low"# set initial value
   
+  if(my.gc < 60){ # check if GC value is lower than 60, assign "low" to result
+    result="low"
+  }
+  else if(my.gc > 75){  # check if GC value is higher than 75, assign "high" to result
+    result="high"
+  }else{ # if those two conditions fail then it must be "medium"
+    result="medium"
+  }
   return(result)
 }
 GCclass(10) # should return "low"
@@ -548,20 +555,31 @@ GCclass(65) # should return "medium"
 # e6)
 # use a for loop to get GC percentage classes for gcValues below
 gcValues=c(10,50,70,65,90)
-for( i in YOU_FILL_IN){
-  YOU_FILL_IN
+for( i in gcValues){
+ 
+  print(GCclass(i) )
 }
 
+for( i in gcValues){
+  
+  cat(GCclass(i),"\n" )
+}
+
+for( i in gcValues){
+  
+  cat(GCclass(i))
+}
 
 # e7)
 # use lapply to get to get GC percentage classes for gcValues
 # Ex: vec=c(1,2,4,5)
 #     power2=function(x){ return(x^2)  }
 #     lapply(vec,power2)
-
+s=lapply(gcValues,GCclass)
 
 # e8)
 # use sapply to get values to get GC percentage classes for gcValues
+sapply(gcValues,GCclass)
 
 
 # e9)
@@ -569,6 +587,7 @@ for( i in YOU_FILL_IN){
 # without using if/else structure ? if so, how can you do it?
 # HINT: subsetting
 
-
-
+result=rep("low",length(gcValues) )
+result[gcValues > 75]="high"
+result[gcValues < 75 & gcValues > 60 ] = "medium"
 
