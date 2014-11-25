@@ -16,35 +16,34 @@ dir()
 
 
 # a1) sum 2 and 3, use +
-2+3
+ 
 
 # a2) take square root of 36, use sqrt()
 
-sqrt(36)
+ 
 
 # a3) take log10 of 1000, use function log10()
-log10(1000)
+ 
 
 # a4) take log2 of 32, use function log2()
-log2(32)
+ 
 
 # a5) assign the sum of 2,3 and 4 to variable x
-x =  2+3+4
-x <- 2+3+4
+ 
 
 # a6) find absolute value of:  5 - 145 using abs() function
-abs(5-145)
+ 
 
 # a7) find the result of square root of 625, divide it by 5 and assign it to variable x
 # Ex: y= log10(1000)/5, the previous statement takes log10 of 1000, divides it 
 # by 5 and assigns the value to variable y
-x = sqrt(625)/5
+ 
 
 # a8) multiply the value you get from previous exercise with 10000, assign it variable x
 # Ex: y=y*5, multiplies y with 5 and assigns the value to y 
 # KEY CONCEPT: results of computations or arbitrary values can be stored in variables
 # we can re-use those variables later on and over-write them with new values
-x2 = x*10000
+ 
 
 #-------------------------------------------------------------------------------
 ### Data structures in R 
@@ -220,12 +219,10 @@ myvec != 4
 
 # c1)
 # read CpG islands from ../data/CpGi.table.hg18.txt, this is a tab-separated file 
-cpgi=read.table(file="../data/CpGi.table.hg18.txt",header=TRUE,sep="\t")
-cpgi=read.table("../data/CpGi.table.hg18.txt",header=TRUE,sep="\t")
-
+ 
 # c2)
 # use head() on cpgi to see first few rows
-head(cpgi)
+ 
 
 
 # c3)
