@@ -102,116 +102,112 @@ myvec != 4
 # b10) 
 # use > operator in myvec[ ] to get elements larger than 2 in 'myvec', described above
 
-
+# ---------------------------------------------------------------------------- #
+# Matrices
+#
 # b11) 
-# make a list using list() function, your list should have 4 elements
-# the one below has 3
-# Ex: mylist= list(a=c(1,2,3),b=c("apple,"orange"))
+# make a 5x3 matrix (5 rows, 3 columns), where the first column contains only number 2
+# the second column only number 4, and the third column only number 8
 
 
 # b12) 
-# select the 1st element of the list you made using $ notation
-# Ex: mylist$a selects first element named "a"
+# From the above matrix extract columns where the sum of numbers in the column is bigger then 10
+# hint: colSums()
 
 
 # b13) 
-# select the 4th element of the list you made using $ notation
+# Extract first two columns and run class() on the result, now extract the
+# first column and run class() on the result, what is the difference?
 
 
-# b14) 
-# select the 1st element of your list using [ ] notation 
-# Ex: mylist[1] selects first element named "a", you get a list with one element
-# Ex: mylist["a"] selects first element named "a", you get a list with one element
+# b14)
+# the following indicator matrix (im) gives you the combination of binding sites for 
+# a set of transcription factors.
+# Firstly, use head(im) to take a look at the matrix
+# Now, find the number of loci at which all three transcription factors are bound
+set.seed(1)
+im = matrix(round(runif(300)), ncol=3)
+colnames(im) = c('Smc1','Smc3','Rad21')
 
+
+# b14++)
+# Try to think of a way in which to count the number of every binding combination
+# from the im matrix. (example: Smc1=5, Smc1-Smc3=11, Smc1 Rad21 = 15 ...)
+
+
+# ---------------------------------------------------------------------------- #
+# Lists
 
 # b15) 
-# select the 4th element of your list using [ ] notation 
+# make a list using list() function, your list should have 4 elements, and the first 
+# element of the list should be named A and contain a vector of numbers from 10 to 1
 
 
 # b16) 
-# make a 5x3 matrix (5 rows, 3 columns) using matrix()
-# Ex: matrix(1:6,nrow=3,ncol=2) makes a 3x2 matrix using numbers between 1 and 6
+# select the 1st element of the list you made using $ notation
 
 
 # b17) 
-# What happens when you use byrow = TRUE in your matrix() as an additional argument?
-# Ex: mat=matrix(1:6,nrow=3,ncol=2,byrow = TRUE)
+# select the 4st element of your list using [ ] notation; now select the 4th element
+# of the list using [[ ]] notation. What is the difference between the two?
 
 
 # b18) 
-# Extract first 3 columns and first 3 rows of your matrix using [] notation
-# Ex: mat[1:2,1:2]
+# In the list you created, add 10 to the first five elements under element a
+# (e.g. the first element of the list should look like: 20 19 18 17 16  5  4  3  2  1)
 
 
 # b19) 
-# Extract last two rows
-# Ex: mat[2:3,] or mat[c(2,3),]
+# What is the difference between the following:
+l1 = list(1:5, letters[1:5])
+l2 = c(list(1:5), letters[1:5])
+l3 = c(list(1:5), list(letters[1:5]))
 
 
-# b20) 
-# Extract first two columns and run class() on the result
 
-
-# b21) 
-# Extract first column and run class() on the result, compare with the above exercise
-
+# ---------------------------------------------------------------------------- #
+# Data Frames
 
 # b22) 
 # make a data frame with 3 columns and 5 rows, make sure first column is sequence
-# of numbers 1:5, and second column is a character vector
-# Ex: df=data.frame(col1=1:3,col2=c("a","b","c"),col3=3:1) # 3x3 data frame
-# Remember you need to make 3x5 data frame
+# of numbers 1:5, and second column is a character vector, and the third one is a logical vector
 
 
 # b23) 
-# Extract first two columns and first two rows 
-# HINT: Same notation as matrices
+# Extract rows where the 1st column is larger than 3
 
 
-# b24) 
-# Extract last two rows
-# HINT: Same notation as matrices
+# b24)
+# convert the data.frame to a matrix; What happens to the elements?
 
 
 # b25) 
 # Extract last two columns using column names
-# Ex: df[,c("col2","col3")]
 
 
-# b26) 
-# Extract second column using column names
-# you can use [] or $ as in lists, use both in two different answers
+# b26)
+# Add the values from the logical column to the numeric column
 
 
 # b27)
-# Extract rows where 1st column is larger than 3
-# HINT: you can get a logical vector using > operator
-# logical vectors can be used in [] when subsetting
+# remove the second column from the data frame
 
 
 # b28)
-# Extract rows where 1st column is larger than or equal to 3
+# replace all values that are TRUE in the logical column with NA; run na.omit
+# on the resulting data.frame, what is the result?
 
 
 # b29)
-# convert data frame to the matrix
-# HINT: use as.matrix()
-# Observe what happened to numeric values in the data.frame
+# try to explain the following results
+f = factor(c(1,1,1,5,5,7))
+as.numeric(f)
 
 
 # b30)
-# make a factor using factor(), with 5 elements
-# Ex: fa=factor(c("a","a","b"))
-
-
-# b31)
-# convert a character vector to factor using as.factor()
-# first make a character vector using c() then use as.factor()
-
-
-# b32)
-# convert the factor you made above to character using as.character()
-
+# from the iris dataset (i.e. to see the dataset, type head(iris))
+# count the number of each species speciments that have sepal length > 4 and
+# petal length > 4
 
 #-------------------------------------------------------------------------------
 ### Reading in and writing data out in R
@@ -221,9 +217,8 @@ myvec != 4
 # read CpG islands from ../data/CpGi.table.hg18.txt, this is a tab-separated file 
  
 # c2)
-# use head() on cpgi to see first few rows
+# how many rows does the table contain
  
-
 
 # c3)
 # why the following doesn't work? see sep argument at help(read.table)
@@ -233,15 +228,10 @@ head(cpgiSepComma)
 
 # c4)
 # what happens when header=FALSE ?
-cpgiHF=read.table("../data/CpGi.table.hg18.txt",header=FALSE,sep="\t")
-head(cpgiHF)
-head(cpgi)
 
 
 # c5)
-# read only first 10 rows
-cpgi10row=read.table("../data/CpGi.table.hg18.txt",header=TRUE,sep="\t",nrow=10)
-cpgi10row
+# read only the first 10 rows
 
 
 # c6)
@@ -265,30 +255,16 @@ write.table(cpgi,file="my.cpgi.file.txt")
 
 
 # c10)
-# write the first 3 columns of 'cpgi'
+# write CpG islands only on chr1
 
 
 # c11)
-# write CpG islands only on chr1
-# HINT: use subsetting with [], feed a logical vector using == operator
-
-
-# c12)
 # read two other data sets "../data/rn4.refseq.bed" and "../data/rn4.refseq2name.txt"
 # with header=FALSE, assign them to df1 and df2 respectively.
-
-
-# c13)
-# use head() to see what is inside
-
-
-# c14)
 # merge data sets using merge()
-new.df=merge(df1,df2,by.x="V4",by.y="V1")
+# what is the difference between all.x, all.y and all = TRUE?
 
 
-# c15)
-# use head() to see new.df
 
 
 #-------------------------------------------------------------------------------
@@ -503,4 +479,31 @@ for( i in YOU_FILL_IN){
 
 
 
+#-------------------------------------------------------------------------------
+### Apply functions
+#-------------------------------------------------------------------------------
+
+# 1.)
+# From the following data frame, replace each NA value with the average of values
+# in the column in which the NA is located
+d = data.frame(matrix(1:5, ncol=5, nrow=5, byrow=TRUE))
+d[col(d) == row(d)] = NA
+
+# 3.)
+# read in the rn4.refseq.bed; From the dataset count the number of transcripts
+# that have more than one exon
+
+# 2.)
+# We will take the expression data from the Golub, 1999, Science paper and find
+# differentially expressed genes
+# a) Read in the GolubExprs.txt
+# b) Read in the GolubAnnot.txt
+# c) How many cases corespond to ALL and how many to MLL
+# d) Change the column names in the GolubExpr table to their corresponding
+#    samples
+# e) Use the apply function with t.test to calculate the p-value for each gene
+#    in order to determine whether they are differentially expressed.
+# f) Adjust the p.values using the FDR method (hint: p.adjust)
+# d) Find the 50 most differentially expressed genes, and select them, and plot them
+#    Using the heatmap functions
 
