@@ -130,6 +130,8 @@ im = matrix(round(runif(300)), ncol=3)
 colnames(im) = c('Smc1','Smc3','Rad21')
 
 
+
+
 # b14++)
 # Try to think of a way in which to count the number of every binding combination
 # from the im matrix. (example: Smc1=5, Smc1-Smc3=11, Smc1 Rad21 = 15 ...)

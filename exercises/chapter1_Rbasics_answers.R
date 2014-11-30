@@ -111,140 +111,139 @@ myvec[ myvec > 2 ]
 myvec[ myvec == 2 ] 
 myvec[ myvec != 2 ] 
 
+# ---------------------------------------------------------------------------- #
+# Matrices
+#
 # b11) 
-# make a list using list() function, your list should have 4 elements
-# the one below has 2
-# Ex: mylist= list(a=c(1,2,3),b=c("apple,"orange"))
-mylist= list(a=c(1,2,3),
-            b=c("apple","orange"),
-            c=matrix(1:4,nrow=2),
-            d="hello")
+# make a 5x3 matrix (5 rows, 3 columns), where the first column contains only number 2
+# the second column only number 4, and the third column only number 8
+m = matrix(c(2,4,8), ncol=3, nrow=5, byrow=T)
+m
+
 
 # b12) 
-# select the 1st element of the list you made using $ notation
-# Ex: mylist$a selects first element named "a"
-mylist$a
+# From the above matrix extract columns where the sum of numbers in the column is bigger then 10
+# hint: colSums()
+m[,colSums(m)> 10]
+
 
 # b13) 
-# select the 4th element of the list you made using $ notation
-mylist$d
+# Extract first two columns and run class() on the result, now extract the
+# first column and run class() on the result, what is the difference?
+class(m[,1:2])
+class(m[,1,drop=F])
+dim(m[,1])
 
-# b14) 
-# select the 1st element of your list using [ ] notation 
-# Ex: mylist[1] selects first element named "a", you get a list with one element
-# Ex: mylist["a"] selects first element named "a", you get a list with one element
-mylist[1] # -> still a list
-mylist[[1]] # not a list
 
-mylist["a"] 
-mylist[["a"]] 
+# b14)
+# the following indicator matrix (im) gives you the combination of binding sites for 
+# a set of transcription factors.
+# Firstly, use head(im) to take a look at the matrix
+# Now, find the number of loci at which all three transcription factors are bound
+set.seed(1)
+im = matrix(round(runif(300)), ncol=3)
+colnames(im) = c('Smc1','Smc3','Rad21')
+
+head(im,10)
+sum(rowSums(im) == 3)
+
+
+# b14++)
+# Try to think of a way in which to count the number of every binding combination
+# from the im matrix. (example: Smc1=5, Smc1-Smc3=11, Smc1 Rad21 = 15 ...)
+table(rowSums(t(t(im)*(2^(0:(ncol(im)-1))))))
+
+
+# ---------------------------------------------------------------------------- #
+# Lists
 
 # b15) 
-# select the 4th element of your list using [ ] notation 
-mylist[4] 
-mylist[[4]]
+# make a list using list() function, your list should have 4 elements, and the first 
+# element of the list should be named A and contain a vector of numbers from 10 to 1
+l = list(A = 10:1, B=letters[1:5], C=c(T,F), D=rnorm(10))
+
 
 # b16) 
-# make a 5x3 matrix (5 rows, 3 columns) using matrix()
-# Ex: matrix(1:6,nrow=3,ncol=2) makes a 3x2 matrix using numbers between 1 and 6
-mat=matrix(1:15,nrow=5,ncol=3)
+# select the 1st element of the list you made using $ notation
+l$A
 
 # b17) 
-# What happens when you use byrow = TRUE in your matrix() as an additional argument?
-# Ex: mat=matrix(1:6,nrow=3,ncol=2,byrow = TRUE)
-mat=matrix(1:15,nrow=5,ncol=3,byrow = TRUE)
+# select the 4st element of your list using [ ] notation; now select the 4th element
+# of the list using [[ ]] notation. What is the difference between the two?
+l[4]
+l[[4]]
+
+### [] select a sublist at a certain position, while [[]] selets the elements of the
+### sublist
 
 # b18) 
-# Extract first 3 columns and first 3 rows of your matrix using [] notation
-# Ex: mat[1:2,1:2]
-mat[1:3,1:3]
+# In the list you created, add 10 to the first five elements under element a
+# (e.g. the first element of the list should look like: 20 19 18 17 16  5  4  3  2  1)
+l[[1]][1:5] = l[[1]][1:5] + 10
+
 
 # b19) 
-# Extract last two rows
-# Ex: mat[2:3,] or mat[c(2,3),]
-mat[4:5,] 
-mat[c(nrow(mat)-1,nrow(mat)),] 
-tail(mat,n=1)
-tail(mat,n=2)
+# What is the difference between the following:
+l1 = list(1:5, letters[1:5])
+l2 = c(list(1:5), letters[1:5])
+l3 = c(list(1:5), list(letters[1:5]))
 
-# b20) 
-# Extract first two columns and run class() on the result
-class(mat[,1:2])
+### l1 and l3 are the same
+### l2 shows you that if you concatenate a list and a vector, each element of the
+### vector will become a separate element of the list
 
-# b21) 
-# Extract first column and run class() on the result, compare with the above exercise
-class(mat[,1])
+# ---------------------------------------------------------------------------- #
+# Data Frames
 
 # b22) 
 # make a data frame with 3 columns and 5 rows, make sure first column is sequence
-# of numbers 1:5, and second column is a character vector
-# Ex: df=data.frame(col1=1:3,col2=c("a","b","c"),col3=3:1) # 3x3 data frame
-# Remember you need to make 3x5 data frame
-df=data.frame(col1=1:5,col2=c("a","2","3","b","c"),col3=5:1)
+# of numbers 1:5, and second column is a character vector, and the third one is a logical vector
+d = data.frame(a=1:5, b=letters[1:5], c=c(T,F,T,F,T))
+
 
 # b23) 
-# Extract first two columns and first two rows 
-# HINT: Same notation as matrices
-df[,1:2]
+# Extract rows where the 1st column is larger than 3
+d[d$a > 3,]
 
-df[,1:2]
 
-# b24) 
-# Extract last two rows
-# HINT: Same notation as matrices
-df[,4:5]
+# b24)
+# convert the data.frame to a matrix; What happens to the elements?
+as.matrix(d)
+
 
 # b25) 
 # Extract last two columns using column names
-# Ex: df[,c("col2","col3")]
-df[,c("col2","col3")]
+d[,c('b','c')]
 
-# b26) 
-# Extract second column using column names
-# you can use [] or $ as in lists, use both in two different answers
-df$col2
-df[,"col2"]
-class(df["col1"])
-class(df[,"col1"])
+# b26)
+# Add the values from the logical column to the numeric column
+d[,1] = d[,1] + d[,3]
 
 # b27)
-# Extract rows where 1st column is larger than 3
-# HINT: you can get a logical vector using > operator
-# logical vectors can be used in [] when subsetting
-df[df$col1 >3 , ]
-
+# remove the second column from the data frame
+d[,2] = NULL
 
 # b28)
-# Extract rows where 1st column is larger than or equal to 3
-df[df$col1 >= 3 , ]
-
+# replace all values that are TRUE in the logical column with NA; run na.omit
+# on the resulting data.frame, what is the result?
+d$c[d$c == TRUE] = NA
+na.omit(d)
 
 # b29)
-# convert data frame to the matrix
-# HINT: use as.matrix()
-# Observe what happened to numeric values in the data.frame
-class(df[,c(1,3)])
-as.matrix(df[,c(1,3)])
-as.matrix(df)
-
+# try to explain the following results
+f = factor(c(1,1,1,5,5,7))
+as.numeric(f)
+### when converting from factor to a numeric variable R uses the levels of the
+### factor and not the inherent values
 
 # b30)
-# make a factor using factor(), with 5 elements
-# Ex: fa=factor(c("a","a","b"))
-fa=factor(c("a","a","b","c","c"))
+# from the iris dataset (i.e. to see the dataset, type head(iris))
+# count the number of each species speciments that have sepal length > 4 and
+# petal length > 4
+table(iris$Species[iris$Sepal.Length > 4 & iris$Petal.Length >4])
 
-# b31)
-# convert a character vector to factor using as.factor()
-# first make a character vector using c() then use as.factor()
-my.vec=c("a","a","b","c","c")
-as.factor(my.vec)
-
-# b32)
-# convert the factor you made above to character using as.character()
-fa
-as.character(fa)
-as.numeric()
-as.factor()
+### alternatively
+table(subset(iris, Sepal.Length > 4 & Petal.Length > 4, select=Species))
 
 #-------------------------------------------------------------------------------
 ### Reading in and writing data out in R
@@ -252,13 +251,16 @@ as.factor()
 
 # c1)
 # read CpG islands from ../data/CpGi.table.hg18.txt, this is a tab-separated file 
-cpgi=read.table(file="../data/CpGi.table.hg18.txt",header=TRUE,sep="\t")
-cpgi=read.table("../data/CpGi.table.hg18.txt",header=TRUE,sep="\t")
+### here you have to be sure that the working directory is the directory with 
+### containing the exercise files
+getwd()
+### if not, set the working directory to the one with the exercise files
+d = read.table('../data/CpGi.table.hg18.txt', sep='\t', header=TRUE)
+head(d)
 
 # c2)
-# use head() on cpgi to see first few rows
-head(cpgi)
-tail(cpgi)
+# how many rows does the table contain
+nrow(d)
 
 # c3)
 # why the following doesn't work? see sep argument at help(read.table)
@@ -268,24 +270,18 @@ head(cpgiSepComma)
 
 # c4)
 # what happens when header=FALSE ?
-cpgiHF=read.table("../data/CpGi.table.hg18.txt",header=FALSE,sep="\t",
-                  stringsAsFactors=FALSE)
-head(cpgiHF)
-head(cpgi)
-class(cpgiHF$V2)
-class(cpgiHF$V2)
+### header becomes the first line in the table and all lines are read in as factors
+### which is very very bad
 
 # c5)
-# read only first 10 rows
-cpgi10row=read.table("../data/CpGi.table.hg18.txt",header=TRUE,sep="\t",nrow=10)
-cpgi10row
-
+# read only the first 10 rows
+d = read.table('../data/CpGi.table.hg18.txt', sep='\t', header=TRUE, nrows=10)
+nrow(d)
 
 # c6)
 # use read.table("../data/CpGi.table.hg18.txt",... with header=FALSE
 # do head() to see the results
-df=read.table("../data/CpGi.table.hg18.txt",header=FALSE,sep="\t")
-head(df)
+
 
 # c7)
 # write CpG islands to a text file
@@ -295,47 +291,36 @@ write.table(cpgi,file="my.cpgi.file.txt")
 # c8)
 # same as above but use quote=FALSE,sep="\t" and row.names=FALSE arguments 
 # save the file to "my.cpgi.file2.txt" and compare it with "my.cpgi.file.txt"
-write.table(cpgi,file="my.cpgi.file2.txt",quote=FALSE,sep="\t",row.names=FALSE)
-
+write.table(cpgi,file="my.cpgi.file2.txt", quote=FALSE, sep='\t')
 
 # c9)
 # write out the first 10 rows of 'cpgi'
 # HINT: use subsetting for data frames we learned before
+write.table(cpgi[1:10,], file="my.cpgi.file2.txt", quote=FALSE, sep='\t')
 
-write.table(cpgi[1:10,],file="my.cpgi.fileNrow10.txt",quote=FALSE,sep="\t")
-
+### alternatively
+write.table(head(cpgi,n=10), file="my.cpgi.file2.txt", quote=FALSE, sep='\t')
 
 # c10)
-# write the first 3 columns of 'cpgi'
-write.table(cpgi[,1:3],file="my.cpgi.fileCol3.txt",quote=FALSE,sep="\t")
-
+# write CpG islands only on chr1
+write.table(cpgi[cpgi$chrom == 'chr1',], file="my.cpgi.file.chr1.txt", quote=FALSE, sep='\t')
 
 # c11)
-# write CpG islands only on chr1
-# HINT: use subsetting with [], feed a logical vector using == operator
-write.table(cpgi[cpgi$chrom == "chr1",],file="my.cpgi.fileChr1.txt",
-            quote=FALSE,sep="\t")
-head(cpgi[cpgi$chrom == "chr1",])
-
-# c12)
 # read two other data sets "../data/rn4.refseq.bed" and "../data/rn4.refseq2name.txt"
 # with header=FALSE, assign them to df1 and df2 respectively.
-df1=read.table("../data/rn4.refseq.bed",sep="\t",header=FALSE)
-df2=read.table("../data/rn4.refseq2name.txt",sep="\t",header=FALSE)
-
-# c13)
-# use head() to see what is inside
-head(df1)
-head(df2)
-
-# c14)
 # merge data sets using merge()
-new.df=merge(df1,df2,by.x="V4",by.y="V1")
+# what is the difference between all.x, all.y and all = TRUE?
+r1 = read.table('../data/rn4.refseq.bed', sep='\t', header=FALSE)
+r2 = read.table('../data/rn4.refseq2name.txt', sep='\t', header=FALSE)
 
+head(r1)
+head(r2)
 
-# c15)
-# use head() to see new.df
-head(new.df)
+nrow(r1)
+nrow(r2)
+
+m = merge(r1, r2, by.x='V4', by.y='V1')
+nrow(m)
 
 #-------------------------------------------------------------------------------
 ### Plotting in R
