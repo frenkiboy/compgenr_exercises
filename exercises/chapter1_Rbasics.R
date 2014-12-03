@@ -268,14 +268,14 @@ write.table(cpgi,file="my.cpgi.file.txt")
 
 
 #-------------------------------------------------------------------------------
-### Appetizer
+### Warup
 #-------------------------------------------------------------------------------
-# Ap 1)
+# W 1)
 # what does the following line do? try to think of a solution; and then check
 # whether you are correct
 1:5[-4]
 
-# Ap 2)
+# W 2)
 # give the following vector -3:3, I want to know how many elements are lower than -2
 # thing of the solution, and then check the code below
 v = -3:3
