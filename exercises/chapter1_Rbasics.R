@@ -267,135 +267,95 @@ write.table(cpgi,file="my.cpgi.file.txt")
 # what is the difference between all.x, all.y and all = TRUE?
 
 
+#-------------------------------------------------------------------------------
+### Appetizer
+#-------------------------------------------------------------------------------
+# Ap 1)
+# what does the following line do? try to think of a solution; and then check
+# whether you are correct
+1:5[-4]
 
+# Ap 2)
+# give the following vector -3:3, I want to know how many elements are lower than -2
+# thing of the solution, and then check the code below
+v = -3:3
+sum(v<-2)
 
 #-------------------------------------------------------------------------------
 ### Plotting in R
 #-------------------------------------------------------------------------------
 
-x1=1:100+rnorm(100,mean=0,sd=15)
-y1=1:100
+
 # d1)
-# make a scatter plot using x1 and x2 generated above
-# Answer: plot(x1,y1)
+# Using the iris dataset, make a scatterplot of Sepal.Length vs Petal.Length
+# hint: plot
 
 
 # d2)
-# use main argument to give a title to plot() as in plot(x,y,main="title")
+# color the points on the plot based on the species argument
 
 
 # d3)
-# use xlab argument to set a label to x-axis
-# Ex: plot(x,y,xlab="my label")
+# What do the following arguments do?: xlab, ylab, main, cex, pch, axes, xlim, ylim
+
 
 # d4)
-# use ylab argument to set a label to y-axis
+# Make three plots on the same canvas: 
+# Sepal.Length vs Petal.Length, Sepal.Width vs Petal.Width, Petal.Length vs Petal Width
+# on each plot color with red, points corresponding to the setosa species
+# hint: (par(mfrow)), points
+
 
 # d5)
-# see what mtext(side=3,text="hi there") does
-# HINT: mtext stands for margin text
+# Plot a scatter plot of Sepal.Length vs Sepal.Width only for the setosa species,
+# and add the correlation between the vairables in the left upper corner of the plot
+# hint: cor, text
 
 
 # d6)
-# see what mtext(side=2,text="hi there") does
-# it stands for "margin text", look at your plot after execution
+# read into R the Cpgi.table.hg18.txt
+# plot a histogram of start sites of cpg islands on chromosome 1
+# what does the breaks argument do? Try changing the breaks argument to 1000
+# what does the include.lowest argument do?
+# hint: hist
+
 
 # d7)
-# see what paste() is used for
-paste("Text","here")
-myText=paste("Text","here")
-myText
+# using the ToothGrowth dataset
+# draw a boxplot of teeth length
+# draw a boxplot of teeth length conditioned on the amount of vitamin C (dose)
+# draw a boxplot of teeth length conditioned on the amount of vitamin C and 
+# the method of delivery (supp variable) - color the boxplot of different groups
+# in pretty colors
+# what does the horizontal = TRUE argument do?
 
 
 # d8)
-# You can use paste() as 'text' argument in mtext() try that, you need to re-plot
-# your plot first. HINT: mtext(side=3,text=paste(...))
+# What do the following commands do?
+boxplot(len~supp+dose, data=ToothGrowth,  col=c('darkorange','cornflowerblue'))
+boxplot(len~dose+supp, data=ToothGrowth, col=c(rep('red',3), rep('blue',3)))
 
 
-# d9)
-# cor() calculates correlation between two vectors
-# pearson correlation is a measure of the linear correlation (dependence) 
-# between two variables X and Y
-corxy=cor(x1,y1) # calculates pearson correlation
-
+# d9) 
+# Save your last plot into a file in three different ways:
+# Click on export in the bottom right command panel
+# use the dev.copy command
+# use the pdf command
 
 # d10)
-# Can you use mtext(),cor() and paste() to display correlation coefficient on
-# your scatterplot ?
+# what does the following set of commands do?
+set.seed(1)
+r = rpois(1000, 7)
+tr = table(factor(r, levels=1:30))
+barplot(tr)
 
+r2 = rpois(1000, 15)
+tr2 = table(factor(r2, levels=1:30))
+m = rbind(tr, tr2)
+barplot(m)
+barplot(m, beside=TRUE)
 
 # d11)
-# change colors using col
-# Ex: plot(x,y,col="red")
-
-
-# d12)
-# use pch=19 as an argument to your plot() command
-
-
-# d13)
-# use pch=18 as an argument to your plot() command
-
-
-# d14)
-# make histogram of x1 with hist() function
-# histogram is a graphical representation of the data distribution 
-
-
-# d15)
-# you can change colors with 'col', add labels with 'xlab', 'ylab', and add a 'title'
-# with 'main' arguments. Try all these in a histogram.
-
-
-# d16)
-# make boxplot of y1 with boxplot()
-
-
-# d17)
-# make boxplots of x1 and y1 in the same plot
-# boxplot
-
-
-# d18)
-# in boxplot use horizontal = TRUE  argument
-
-
-# d19)
-# make multiple plots with par(mfrow=c(2,1))
-# 1. run par(mfrow=c(2,1))
-# 2. make a boxplot 
-# 3. make a histogram
-
-
-# d20)
-# do the same as above but this time with par(mfrow=c(1,2))
-
-
-# d21)
-# save your plot using "Export" button
-
-
-# d22)
-# save your plot by running :
-# dev.copy(pdf,filename="plot.file.pdf");dev.off()
-
-
-# d23)
-# save your plot running :
-# dev.copy(png,filename="plot.file.png");dev.off()
-
-
-# d24)
-# Another way to save the plot is the following
-# 1. Open a graphics device
-# 2. Create the plot
-# 3. Close the graphics device
-pdf("myplot.pdf", width = 5, height = 5) # 1.
-plot(x1, y1) # 2.
-dev.off() # 3.
-
-
-# d24)
 # EXTRA:
 # color density scatterplot
 x2=1:1000+rnorm(1000,mean=0,sd=200)
@@ -409,75 +369,30 @@ smoothScatter(x2,y2,colramp = colorRampPalette(c("white","blue", "green","yellow
 #-------------------------------------------------------------------------------
 
 # e1)
-# read CpG island data
-cpgi=read.table("../data/CpGi.table.hg18.txt",header=TRUE,sep="\t")
-head(cpgi)
+# write a function called my.mean that calculates the average value of a vector
+# write a function called my.sd that calculates the standard deviation of a vector
 
-# e2)
-# check values at perGc column using a histogram
-# perGc stands for GC percent => percentage of C+G nucleotides
-hist(cpgi$perGc) # most values are between 60 and 70
+# e2) 
+# write a function that takes two vectors and returns the pearson correlation 
+# coefficient
+
 
 # e3)
-# also make a boxplot
+# write a function that calculates the sum of numbers from 1 to n; use a for loop
 
 
 # e4)
-# use if/else structure to decide if given GC percent high, low or medium
-# if it is low, high, or medium. low < 60, high>75, medium is between 60 and 75
-# use greater or less than operators <  or  >
-GCper=65
-result=YOU_FILL_IN # set initial value
-
-if(YOU_FILL_IN){ # check if GC value is lower than 60, assign "low" to result
-  
-}
-else if(YOU_FILL_IN){  # check if GC value is higher than 75, assign "high" to result
-  
-}else{ # if those two conditions fail then it must be "medium"
-  
-}
-result
-
+# read into R the GolubExprs.txt
+# using a 2 for loops, calculate all pariwise correlation coefficients between the samples
+# and save them into a matrix named mcor
+# visualize the matrix using the heatmap command; use heatmap(1-mcor), why are we doing this?
+# what do Rowv and Colv parameters do?
+# install the pheatmap package, and visualize the matrix using the pheatmap command
 
 # e5)
-# write a function that takes a value of GC percent and decides
-# if it is low, high, or medium. low < 60, high>75, medium is between 60 and 75
-# use
-GCclass<-function(my.gc){
-  
-  YOU_FILL_IN
-  
-  return(result)
-}
-GCclass(10) # should return "low"
-GCclass(90) # should return "high"
-GCclass(65) # should return "medium"
-
-
-# e6)
-# use a for loop to get GC percentage classes for gcValues below
-gcValues=c(10,50,70,65,90)
-for( i in YOU_FILL_IN){
-  YOU_FILL_IN
-}
-
-
-# e7)
-# use lapply to get to get GC percentage classes for gcValues
-# Ex: vec=c(1,2,4,5)
-#     power2=function(x){ return(x^2)  }
-#     lapply(vec,power2)
-
-
-# e8)
-# use sapply to get values to get GC percentage classes for gcValues
-
-
-# e9)
-# Is there a way to decide on the GC percentage class of given vector of GCpercentages
-# without using if/else structure ? if so, how can you do it?
-# HINT: subsetting
+# write a function that calculates the average value of a numeric vector, but
+# if you give the function a character or a factor, it returns "Error: this is not
+# a numeric vector"
 
 
 
@@ -503,9 +418,11 @@ d[col(d) == row(d)] = NA
 # c) How many cases corespond to ALL and how many to MLL
 # d) Change the column names in the GolubExpr table to their corresponding
 #    samples
-# e) Use the apply function with t.test to calculate the p-value for each gene
+# e) Remove all rows that contain negative values
+# f) Use the apply function with t.test to calculate the p-value for each gene
 #    in order to determine whether they are differentially expressed.
-# f) Adjust the p.values using the FDR method (hint: p.adjust)
-# d) Find the 50 most differentially expressed genes, and select them, and plot them
+# g) Adjust the p.values using the FDR method (hint: p.adjust)
+# h) Find the 50 most differentially expressed genes, and select them, and plot them
 #    Using the heatmap functions
+# i) Draw an M - A plot of the samples, and color the 50 most differentially expressed genes
 
