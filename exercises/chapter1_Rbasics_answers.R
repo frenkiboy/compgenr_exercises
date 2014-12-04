@@ -326,253 +326,389 @@ nrow(m)
 ### Plotting in R
 #-------------------------------------------------------------------------------
 
-x1=1:100+rnorm(100,mean=0,sd=15)
-y1=1:100
+
 # d1)
-# make a scatter plot using x1 and x2 generated above
-# Answer: plot(x1,y1)
-plot(x1,y1)
+# Using the iris dataset, make a scatterplot of Sepal.Length vs Petal.Length
+# hint: plot
+plot(iris$Sepal.Length, iris$Petal.Length)
 
 # d2)
-# use main argument to give a title to plot() as in plot(x,y,main="title")
-plot(x1,y1,main="scatter plot")
+# color the points on the plot based on the species variable
+plot(iris$Sepal.Length, iris$Petal.Length, col=iris$Species)
 
 # d3)
-# use xlab argument to set a label to x-axis
-# Ex: plot(x,y,xlab="my label")
-plot(x1,y1,main="scatter plot",xlab="x label")
+# What do the following arguments do?: xlab, ylab, main, cex, pch, axes, xlim, ylim
+# xlab - changes the name of the X axis
+plot(iris$Sepal.Length, iris$Petal.Length, col=iris$Species, xlab='My x axis')
+# ylab - changes the name of the Y axis
+plot(iris$Sepal.Length, iris$Petal.Length, col=iris$Species, ylab='My y axis')
+# main - changes the title of the plot
+plot(iris$Sepal.Length, iris$Petal.Length, col=iris$Species, main='My title')
+# cex - changes the size of the dots
+plot(iris$Sepal.Length, iris$Petal.Length, col=iris$Species, cex=2)
+# pch - changes the type of the dot (to a square, star, filled dot ....)
+plot(iris$Sepal.Length, iris$Petal.Length, col=iris$Species, pch=20)
+
+# axes - stops the plotting of the x and y axis and enables axes customization
+plot(iris$Sepal.Length, iris$Petal.Length, col=iris$Species, axes=F)
+axis(1, lwd=2)
+axis(2, lwd=2)
+
+# xlim, ylim - change the plotting range
+plot(iris$Sepal.Length, iris$Petal.Length, col=iris$Species, xlim=c(0,10),ylim=c(1,10))
 
 # d4)
-# use ylab argument to set a label to y-axis
-plot(x1,y1,main="scatter plot",xlab="x label",ylab="y label")
+# Make three plots on the same canvas: 
+# Sepal.Length vs Petal.Length, Sepal.Width vs Petal.Width, Petal.Length vs Petal Width
+# on each plot color with red, points corresponding to the setosa species
+# hint: (par(mfrow)), points
+### par function changes the default parameters of the canvas; the mfrow
+### parameter changes the number of plots on the same canvas
+par(mfrow=c(1,3))
+plot(iris$Sepal.Length, iris$Petal.Length, col=c('red','black','black')[iris$Species])
+plot(iris$Sepal.Width,  iris$Petal.Width, col=c('red','black','black')[iris$Species])
+plot(iris$Petal.Length, iris$Petal.Width, col=c('red','black','black')[iris$Species])
+
+
+### alternative solution
+setosa = iris[iris$Species == 'setosa',]
+plot(iris$Sepal.Length, iris$Petal.Length, pch=20)
+points(setosa$Sepal.Length, setosa$Petal.Length, col='red', pch=20)
+
+plot(iris$Sepal.Width,  iris$Petal.Width, pch=20)
+points(setosa$Sepal.Width,  setosa$Petal.Width, col='red', pch=20)
+
+plot(iris$Petal.Length, iris$Petal.Width, pch=20)
+points(setosa$Petal.Length, setosa$Petal.Width, col='red', pch=20)
 
 # d5)
-# see what mtext(side=3,text="hi there") does
-# HINT: mtext stands for margin text
-plot(x1,y1,main="scatter plot",xlab="x label",ylab="y label")
-mtext(side=3,text="hi there") 
+# Plot a scatter plot of Sepal.Length vs Sepal.Width only for the setosa species,
+# and add the correlation between the vairables in the left upper corner of the plot
+# hint: cor, text
+### I am reseting the canvas to plot only one graph
+par(mfrow=c(1,1))
+### here I am selecting only the setosa species
+setosa = iris[iris$Species == 'setosa',]
+plot(setosa$Sepal.Length, setosa$Sepal.Width, pch=20)
+
+### cor function calculates the correlation between the variables
+set.cor = cor(setosa$Sepal.Length, setosa$Sepal.Width)
+
+### text is very similar to the plot function it has three main arguments:
+### x position, y position and labels, which represent text to plot
+text(4.5,4.0,labels=round(set.cor,3))
 
 # d6)
-# see what mtext(side=2,text="hi there") does
-# it stands for "margin text", look at your plot after execution
-mtext(side=2,text="hi there") 
-mtext(side=4,text="hi there") 
+# read into R the Cpgi.table.hg18.txt
+# plot a histogram of start sites of cpg islands on chromosome 1
+# what does the breaks argument do? Try changing the breaks argument to 1000
+# what does the include.lowest argument do?
+# hint: hist
+cpgi = read.table('../data/CpGi.table.hg18.txt', header=TRUE, sep='\t')
+hist(cpgi$chromStart[cpgi$chrom == 'chr1'])
+
+### the breaks parameter controls the number of bins - for example, you can
+### see the centromere quite nicely now
+hist(cpgi$chromStart[cpgi$chrom == 'chr1'], breaks=1000)
+
+v = c(rnorm(10), 4, -4)
+hist(v, breaks=-4:4)
+### the include lowest parameter enables the histogram to include the values
+### into the lowest bin that correspond to the left border
+### e.g. in the histogram above, the -4 is included into the bin from -4 to -43, and
+### in the histogram belov, it is included in the bin from -5 to -4
+hist(v, breaks=-5:4, include.lowest=FALSE)
 
 # d7)
-# see what paste() is used for
-paste("Text","here")
-myText=paste("Text","here")
-myText
+# using the ToothGrowth dataset
+# draw a boxplot of teeth length
+# draw a boxplot of teeth length conditioned on the amount of vitamin C (dose)
+# draw a boxplot of teeth length conditioned on the amount of vitamin C and 
+# the method of delivery (supp variable) - color the boxplot of different groups
+# in pretty colors
+# what does the horizontal = TRUE argument do?
+boxplot(ToothGrowth$len)
+
+### boxplot plotting works with a formula interface (i.e. it uses ~)
+### to plot a continuous variable (teeth length in our case) for different groups, 
+### you put the variable on the left side of the ~, and the groups on the right side
+boxplot(ToothGrowth$len ~ ToothGrowth$supp)
+boxplot(ToothGrowth$len ~ ToothGrowth$dose)
+
 
 
 # d8)
-# You can use paste() as 'text' argument in mtext() try that, you need to re-plot
-# your plot first. HINT: mtext(side=3,text=paste(...))
+# What do the following commands do?
+### this is an advanced version of the formula interface, where you want to visualize
+### your variable of interest (teeth length in our case), but for several groups
+### that is done by putting the groups on the right side of the ~ and separating them
+### with +
+### the order in which you specify the groups matters as you can see on the plots below
+boxplot(len~supp+dose, data=ToothGrowth,  col=c('darkorange','cornflowerblue'))
+boxplot(len~dose+supp, data=ToothGrowth, col=c(rep('red',3), rep('blue',3)))
 
-mtext(side=3,text=paste("here","here"))
 
-# d9)
-# cor() calculates correlation between two vectors
-# pearson correlation is a measure of the linear correlation (dependence) 
-# between two variables X and Y
-corxy=cor(x1,y1) # calculates pearson correlation
+# d9) 
+# Save your last plot into a file in three different ways:
+# Click on export in the bottom right command panel
+# use the dev.copy command
+# use the pdf command
+boxplot(len~dose+supp, data=ToothGrowth, col=c(rep('red',3), rep('blue',3)))
+
+pdf(filename='MyBoxplot.pdf')
+boxplot(len~dose+supp, data=ToothGrowth, col=c(rep('red',3), rep('blue',3)))
+dev.off()
+### if you don't specify dev.off(), the plot will not be saved
+
+boxplot(len~dose+supp, data=ToothGrowth, col=c(rep('red',3), rep('blue',3)))
+dev.copy(pdf, filename='MyBoxplot.pdf');dev.off()
 
 
 # d10)
-# Can you use mtext(),cor() and paste() to display correlation coefficient on
-# your scatterplot ?
+# what does the following set of commands do?
+### set.seed is a function that regulates how the random numbers will be generated
+### for example, if you put set.seed(1), and generate 10 random numbers from the normal 
+### distribution, it will always be the same 10 random numbers
+set.seed(1)
+### rpois generates numbers from the poisson distribution; here we are generating
+###  1000 numbers from the poisson distribution that has the average value 7
+r = rpois(1000, 7)
 
-plot(x1,y1,main="scatter")
-corxy=cor(x1,y1) 
-#mtext(side=3,text=paste("Pearson Corr.",corxy))
-mtext(side=3,text=paste("Pearson Corr.",round(corxy,3) ) )
+### the table function counts the number of each distinct element in a vector
+### e.g. v = c(1,1,2,2,2,5) - then table would say 1-2, 2-3, 5-1
+### here we are using the table function to count how much of each number we have in vector r
+### we convert r to a factor, and explicitly set the levels, because that will make
+### the table function countt the occurences of a specific number 
+### even if it that number is not included in the vector
+### e.g. values 17 - 30 are not present in the vector r, but they are nevertheless counted
+### this is acutally one of the rare ocasions where a factor variable is useful
+tr = table(factor(r, levels=1:30))
 
-plot(x1,y1)
-mtext(side=3,text=paste("Pearson Corr.",round( cor(x1,y1)  ,3)  ) )
+### barplot is used for plottin the distribution of categorical variables
+barplot(tr)
+
+r2 = rpois(1000, 15)
+tr2 = table(factor(r2, levels=1:30))
+m = rbind(tr, tr2)
+
+### if you supply a matrix to the barplot function, each row will be printed in 
+### a different color
+barplot(m)
+
+### the beside argument tells the function not to stack the counts that belong to
+### same bins, but to plot two columns side by side
+barplot(m, beside=TRUE)
 
 # d11)
-# change colors using col
-# Ex: plot(x,y,col="red")
-plot(x1,y1,col="red")
-
-# d12)
-# use pch=19 as an argument to your plot() command
-plot(x1,y1,col="red",pch=19)
-
-
-# d13)
-# use pch=18 as an argument to your plot() command
-plot(x1,y1,col="red",pch=18)
-?points
-
-# d14)
-# make histogram of x1 with hist() function
-# histogram is a graphical representation of the data distribution 
-hist(x1)
-
-# d15)
-# you can change colors with 'col', add labels with 'xlab', 'ylab', and add a 'title'
-# with 'main' arguments. Try all these in a histogram.
-hist(x1,main="title")
-
-# d16)
-# make boxplot of y1 with boxplot()
-boxplot(x1,main="title")
-
-
-# d17)
-# make boxplots of x1 and y1 in the same plot
-# boxplot
-boxplot(x1,y1,ylab="values",main="title")
-
-# d18)
-# in boxplot use horizontal = TRUE  argument
-boxplot(x1,y1,ylab="values",main="title",horizontal=TRUE)
-
-
-# d19)
-# make multiple plots with par(mfrow=c(2,1))
-# 1. run par(mfrow=c(2,1))
-# 2. make a boxplot 
-# 3. make a histogram
-par( mfrow=c(2,1) )
-hist(x1)
-boxplot(y1)
-
-# d20)
-# do the same as above but this time with par(mfrow=c(1,2))
-par(mfrow=c(2,2))
-hist(x1)
-boxplot(y1)
-
-# d21)
-# save your plot using "Export" button
-
-
-# d22)
-# save your plot by running :
-# dev.copy(pdf,file="plot.file.pdf");dev.off()
-dev.copy(pdf,file="plot.file.pdf");dev.off()
-
-# d23)
-# save your plot running :
-# dev.copy(png,filename="plot.file.png");dev.off()
-dev.copy(png,file="plot.file.png");dev.off()
-
-# d24)
-# Another way to save the plot is the following
-# 1. Open a graphics device
-# 2. Create the plot
-# 3. Close the graphics device
-pdf("myplot1.pdf", width = 5, height = 5) # 1.
-plot(x1, y1) # 2.
-dev.off()   # 3.
-
-
-# d24)
 # EXTRA:
 # color density scatterplot
 x2=1:1000+rnorm(1000,mean=0,sd=200)
 y2=1:1000
 plot(x2,y2,pch=19,col="blue")
 smoothScatter(x2,y2,colramp = heat.colors )
-smoothScatter(x2,y2,
-               colramp = colorRampPalette(c("white","blue", "green","yellow","red")))
+smoothScatter(x2,y2,colramp = colorRampPalette(c("white","blue", "green","yellow","red")))
 
 #-------------------------------------------------------------------------------
 ### Functions and control structures (for, if/else etc.)
 #-------------------------------------------------------------------------------
 
 # e1)
-# read CpG island data
-cpgi=read.table("../data/CpGi.table.hg18.txt",header=TRUE,sep="\t")
-head(cpgi)
+# write a function called my.mean that calculates the average value of a vector
+# write a function called my.sd that calculates the standard deviation of a vector
 
-# e2)
-# check values at perGc column using a histogram
-# perGc stands for GC percent => percentage of C+G nucleotides
-hist(cpgi$perGc) # most values are between 60 and 70
+my.mean = function(v){
+  
+  the.mean = sum(v)/length(v)
+  return(the.mean)
+}
+
+my.sd = function(v){
+  
+  the.var = sum((v - my.mean(v))^2 )/(length(v)-1)
+  the.sd = sqrt(the.var)
+  return(the.sd)
+}
+
+v = 1:10
+my.mean(v) == mean(v)
+my.sd(v) == sd(v)
+
+# e2) 
+# write a function that takes two vectors and returns the pearson correlation 
+# coefficient
+
+my.cor = function(x,y){
+  
+  my.cor = cov(x,y)/(sd(x)*sd(y))
+  return(my.cor)
+}
+
+### alternative solution
+my.cor2 = function(x,y){
+  
+  my.cov = sum((x-mean(x))*(y-mean(y)))/(length(x)-1)
+  my.cor = my.cov/(sd(x)*sd(y))
+  return(my.cor)
+}
+
+v1 = 1:10
+v2 = 10:1
+my.cor(v1, v1)
+my.cor(v1, v2)
+my.cor(v1, v2) == cor(v1, v2)
+
+my.cor2(v1, v2) == my.cor(v1, v2)
 
 # e3)
-# also make a boxplot
-boxplot(cpgi$perGc) 
+# write a function that calculates the average value of a numeric vector, but
+# if you give the function a character or a factor, it returns "Error: this is not
+# a numeric vector"
+
+my.mean2 = function(x){
+
+  if(!is.numeric(x)){
+    return("Error: this is not a numeric vector")
+  }
+  return(mean(x))
+  
+}
+
 
 # e4)
-# use if/else structure to decide if given GC percent high, low or medium
-# if it is low, high, or medium. low < 60, high>75, medium is between 60 and 75
-# use greater or less than operators <  or  >
-GCper=90
-result="low"# set initial value
+# write a function that returns either a product or a sum of n numbers, based
+# on what the user specifies
+# hint if
 
-if(GCper < 60){ # check if GC value is lower than 60, assign "low" to result
-  result="low"
-}else if(GCper>75){  # check if GC value is higher than 75, assign "high" to result
-  result="high"
-}else{ # if those two conditions fail then it must be "medium"
-  result="medium"
+sumprod = function(x, what='sum'){
+  
+  if(what == 'sum'){
+    return(sum(x))
+  }else{
+    return(prod(x))
+  }
 }
-result
 
+### solution number 2
+sumprod2 = function(x, what='sum'){
+  
+  if(what == 'sum'){
+    return(sum(x))
+  }
+  if(what == 'prod'){}
+    return(prod(x))
+  }
+}
+
+### solution number 3
+sumprod3 = function(x, what='sum'){
+  
+  if(what == 'sum'){
+    res = sum(x)
+  }
+  if(what == 'prod'){}
+   res = prod(x)
+  }
+  return(res)
+}
 
 # e5)
-# write a function that takes a value of GC percent and decides
-# if it is low, high, or medium. low < 60, high>75, medium is between 60 and 75
-# use
-GCclass<-function(my.gc){
-  
-  result="low"# set initial value
-  
-  if(my.gc < 60){ # check if GC value is lower than 60, assign "low" to result
-    result="low"
-  }
-  else if(my.gc > 75){  # check if GC value is higher than 75, assign "high" to result
-    result="high"
-  }else{ # if those two conditions fail then it must be "medium"
-    result="medium"
-  }
-  return(result)
-}
-GCclass(10) # should return "low"
-GCclass(90) # should return "high"
-GCclass(65) # should return "medium"
+# change the correlation function to give an error if the two vectors do not have 
+# the same length
+# hint - if, stop
 
+
+my.cor3 = function(x,y){
+  
+  if(length(x) != length(y)){
+    stop('X and Y do not have the same length')
+  }
+  
+  my.cor = cov(x,y)/(sd(x)*sd(y))
+  return(my.cor)
+}
+
+my.cor3(1:5, 1:10)
 
 # e6)
-# use a for loop to get GC percentage classes for gcValues below
-gcValues=c(10,50,70,65,90)
-for( i in gcValues){
- 
-  print(GCclass(i) )
+# write a function that calculates the sum of numbers from 1 to n; use a for loop
+
+
+my.sum = function(x){
+
+  res = 0
+  for(i in 1:x){
+    res = res + i
+  }
+  return(res)
 }
 
-for( i in gcValues){
-  
-  cat(GCclass(i),"\n" )
-}
-
-for( i in gcValues){
-  
-  cat(GCclass(i))
-}
+v = 10
+my.sum(10) == sum(1:10)
 
 # e7)
-# use lapply to get to get GC percentage classes for gcValues
-# Ex: vec=c(1,2,4,5)
-#     power2=function(x){ return(x^2)  }
-#     lapply(vec,power2)
-s=lapply(gcValues,GCclass)
+# read into R the GolubExprs.txt
+# using a 2 for loops, calculate all pariwise correlation coefficients between the samples
+# and save them into a matrix named mcor
 
-# e8)
-# use sapply to get values to get GC percentage classes for gcValues
-sapply(gcValues,GCclass)
+r = read.table('../data/GolubExprs.txt', header=TRUE, sep='\t')
+r = r[,-1]
+head(r)
+
+mcor = matrix(ncol=ncol(r), nrow=ncol(r))
+for(i in 1:ncol(r)){
+  for(j in 1:ncol(r)){
+    cat(i,j,'\n')
+    mcor[i,j] = cor(r[,i],r[,j])
+  }
+}
+
+all(round(mcor,2) == round(cor(r),2))
 
 
-# e9)
-# Is there a way to decide on the GC percentage class of given vector of GCpercentages
-# without using if/else structure ? if so, how can you do it?
-# HINT: subsetting
 
-result=rep("low",length(gcValues) )
-result[gcValues > 75]="high"
-result[gcValues < 75 & gcValues > 60 ] = "medium"
+# e8.)
+# From the following data frame, replace each NA value with the average of values
+# in the column in which the NA is located
+d = data.frame(matrix(1:5, ncol=5, nrow=5, byrow=TRUE))
+d[col(d) == row(d)] = NA
+
+### solution 1
+d1 = d
+### this loop goes column by column - as designates by the i variable, then it
+### selects the values in the column that correspond to NA: d1[is.na(d1[,i]),i]
+### and replaces them with the mean of values in the same column: mean(d1[,i], na.rm=TRUE)
+for(i in 1:ncol(d1)){
+  d1[is.na(d1[,i]),i] = mean(d1[,i], na.rm=TRUE)
+}
+d1
+
+### solution 2
+d2 = lapply(d, function(x){x[is.na(x)] = mean(x, na.rm=TRUE);x})
+d2 = data.frame(d2)
+d2
+
+
+# e9.)
+# read in the rn4.refseq.bed; From the dataset count the number of transcripts
+# that have more than one exon - exons start locations are located in column 11
+# compare your results with column 10
+
+### you have to put stringsAsFactors=FALSE
+r = read.table('../data/rn4.refseq.bed', header=FALSE, sep='\t', stringsAsFactors=FALSE)
+head(r)
+
+### lets break this one apart:
+### strsplit(r[,11],',') takes the eleventh column and splits it using a comma
+### execute: head(strsplit(r[,11],','))
+### then the lapply function goes over each element of the list and uses the length
+### function to count the number of exons 
+### and finally the unlist function converts the produced list into a vector
+ex.num = unlist(lapply(strsplit(r[,11], ','), function(x)length(x)))
+head(ex.num)
+sum(ex.num > 1)
+
+all(ex.num == r[,10])
+
+
+
 

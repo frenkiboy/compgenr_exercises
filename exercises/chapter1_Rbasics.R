@@ -266,6 +266,15 @@ write.table(cpgi,file="my.cpgi.file.txt")
 # merge data sets using merge()
 # what is the difference between all.x, all.y and all = TRUE?
 
+getwd()
+r1 = read.table('../data/rn4.refseq.bed', header=FALSE, sep='\t')
+r2 = read.table('../data/rn4.refseq2name.txt', header=FALSE, sep='\t')
+
+
+head(r1)
+head(r2)
+m = merge(r1, r2, by.x='V4', by.y='V1')
+head()
 
 #-------------------------------------------------------------------------------
 ### Warup
@@ -292,7 +301,7 @@ sum(v<-2)
 
 
 # d2)
-# color the points on the plot based on the species argument
+# color the points on the plot based on the species variable
 
 
 # d3)
@@ -372,27 +381,52 @@ smoothScatter(x2,y2,colramp = colorRampPalette(c("white","blue", "green","yellow
 # write a function called my.mean that calculates the average value of a vector
 # write a function called my.sd that calculates the standard deviation of a vector
 
+
 # e2) 
 # write a function that takes two vectors and returns the pearson correlation 
 # coefficient
 
 
 # e3)
-# write a function that calculates the sum of numbers from 1 to n; use a for loop
+# write a function that calculates the average value of a numeric vector, but
+# if you give the function a character or a factor, it returns "Error: this is not
+# a numeric vector"
 
 
 # e4)
+# write a function that returns either a product or a sum of n numbers, based
+# on what the user specifies
+# hint if
+
+# e5)
+# change the correlation function to give an error if the two vectors do not have 
+# the same length
+# hint - if, stop
+
+# e6)
+# write a function that calculates the sum of numbers from 1 to n; use a for loop
+
+
+# e7)
 # read into R the GolubExprs.txt
 # using a 2 for loops, calculate all pariwise correlation coefficients between the samples
 # and save them into a matrix named mcor
 # visualize the matrix using the heatmap command; use heatmap(1-mcor), why are we doing this?
-# what do Rowv and Colv parameters do?
-# install the pheatmap package, and visualize the matrix using the pheatmap command
 
-# e5)
-# write a function that calculates the average value of a numeric vector, but
-# if you give the function a character or a factor, it returns "Error: this is not
-# a numeric vector"
+
+# e8.)
+# From the following data frame, replace each NA value with the average of values
+# in the column in which the NA is located
+d = data.frame(matrix(1:5, ncol=5, nrow=5, byrow=TRUE))
+d[col(d) == row(d)] = NA
+
+
+# e9.)
+# read in the rn4.refseq.bed; From the dataset count the number of transcripts
+# that have more than one exon - exons start locations are located in column 11
+# compare your results with column 10
+
+
 
 
 
@@ -400,15 +434,8 @@ smoothScatter(x2,y2,colramp = colorRampPalette(c("white","blue", "green","yellow
 ### Apply functions
 #-------------------------------------------------------------------------------
 
-# 1.)
-# From the following data frame, replace each NA value with the average of values
-# in the column in which the NA is located
-d = data.frame(matrix(1:5, ncol=5, nrow=5, byrow=TRUE))
-d[col(d) == row(d)] = NA
 
-# 3.)
-# read in the rn4.refseq.bed; From the dataset count the number of transcripts
-# that have more than one exon
+
 
 # 2.)
 # We will take the expression data from the Golub, 1999, Science paper and find
