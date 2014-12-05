@@ -539,11 +539,18 @@ my.sd(v) == sd(v)
 
 my.cor = function(x,y){
   
+  my.cor = cor(x,y)
+  return(my.cor)
+}
+
+### alternative solution 1
+my.cor = function(x,y){
+  
   my.cor = cov(x,y)/(sd(x)*sd(y))
   return(my.cor)
 }
 
-### alternative solution
+### alternative solution 2
 my.cor2 = function(x,y){
   
   my.cov = sum((x-mean(x))*(y-mean(y)))/(length(x)-1)
