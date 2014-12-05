@@ -376,7 +376,6 @@ smoothScatter(x2,y2,colramp = colorRampPalette(c("white","blue", "green","yellow
 #-------------------------------------------------------------------------------
 ### Functions and control structures (for, if/else etc.)
 #-------------------------------------------------------------------------------
-
 # e1)
 # write a function called my.mean that calculates the average value of a vector
 # write a function called my.sd that calculates the standard deviation of a vector

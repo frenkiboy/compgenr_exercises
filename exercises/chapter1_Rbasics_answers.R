@@ -516,15 +516,15 @@ smoothScatter(x2,y2,colramp = colorRampPalette(c("white","blue", "green","yellow
 # write a function called my.mean that calculates the average value of a vector
 # write a function called my.sd that calculates the standard deviation of a vector
 
-my.mean = function(v){
+my.mean = function(x){
   
-  the.mean = sum(v)/length(v)
+  the.mean = sum(x)/length(x)
   return(the.mean)
 }
 
-my.sd = function(v){
+my.sd = function(x){
   
-  the.var = sum((v - my.mean(v))^2 )/(length(v)-1)
+  the.var = sum((x - my.mean(x))^2 )/(length(x)-1)
   the.sd = sqrt(the.var)
   return(the.sd)
 }
